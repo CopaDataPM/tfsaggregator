@@ -11,9 +11,11 @@
     <TargetFramework Condition="'$(TargetFramework)'==''">net461</TargetFramework>
     <FileAlignment>512</FileAlignment>
     <CodeAnalysisRuleSet>..\tfs-aggregator.ruleset</CodeAnalysisRuleSet>
-    <Configurations>Debug-2013;Release-2013;Debug-2015;Release-2015;Debug-2015.1;Release-2015.1;Debug-2015.2;Release-2015.2;Debug-2017;Release-2017;Debug-2017.2;Release-2017.2;Debug-2018;Release-2018</Configurations>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <Configurations>Debug-2013;Release-2013;Debug-2015;Release-2015;Debug-2015.1;Release-2015.1;Debug-2015.2;Release-2015.2;Debug-2017;Release-2017;Debug-2017.2;Release-2017.2;Debug-2018;Release-2018;Debug-2019;Release-2019;Debug-2019.1;Release-2019.1;Debug-2020;Release-2020</Configurations>
     <Prefer32Bit>true</Prefer32Bit>
     <ErrorReport>prompt</ErrorReport>
+    <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug-2013|AnyCPU' ">
     <TfsVersion>2013</TfsVersion>
@@ -107,9 +109,45 @@
     <TargetFramework>net461</TargetFramework>
     <DebugType>full</DebugType>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-2019|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <TfsVersion>2019</TfsVersion>
+    <TargetFramework>net471</TargetFramework>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-2019.1|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <TfsVersion>2019.1</TfsVersion>
+    <TargetFramework>net472</TargetFramework>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-2020|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <TfsVersion>2020</TfsVersion>
+    <TargetFramework>net472</TargetFramework>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-2018|AnyCPU'">
     <TfsVersion>2018</TfsVersion>
     <TargetFramework>net461</TargetFramework>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-2019|AnyCPU'">
+    <TfsVersion>2019</TfsVersion>
+    <TargetFramework>net471</TargetFramework>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-2019.1|AnyCPU'">
+    <TfsVersion>2019.1</TfsVersion>
+    <TargetFramework>net472</TargetFramework>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-2020|AnyCPU'">
+    <TfsVersion>2020</TfsVersion>
+    <TargetFramework>net472</TargetFramework>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
@@ -135,14 +173,28 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Desktop.Analyzers" Version="1.1.0" />
-    <PackageReference Include="ManyConsole" Version="1.0.0.3" />
     <PackageReference Include="Microsoft.AnalyzerPowerPack" Version="1.1.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="NDesk.Options" Version="0.2.1" />
     <PackageReference Include="SonarLint" Version="1.6.0" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="6.7.1.4347" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.164">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.9.0.19135">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Aggregator.Core\Aggregator.Core\Aggregator.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Update="C:\Program Files\Azure DevOps Server 2020\\Application Tier\Web Services\bin\Microsoft.TeamFoundation.Server.Types.dll">
+      <Private>true</Private>
+    </Reference>
   </ItemGroup>
 </Project>

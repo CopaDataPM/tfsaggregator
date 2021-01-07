@@ -1,6 +1,13 @@
 <Project>
   <PropertyGroup>
-    <DevelopmentTfsVersion>2018</DevelopmentTfsVersion>
+    <RestoreLockedMode
+            Condition="'$(RestoreLockedMode)' == ''
+                and ('$(TF_BUILD)' != ''
+                or '$(CONTINUOUS_INTEGRATION)' != '')"
+        >
+        true
+    </RestoreLockedMode>
+    <DevelopmentTfsVersion>2020</DevelopmentTfsVersion>
     <TfsVersion Condition="'$(TfsVersion)' == ''">$(DevelopmentTfsVersion)</TfsVersion>
     <AssemblyVersion Condition="'$(MajorMinorPatch)' != ''">$(MajorMinorPatch)</AssemblyVersion>
     <AssemblyFileVersion Condition="'$(MajorMinorPatch)' != ''">$(MajorMinorPatch)</AssemblyFileVersion>
@@ -8,9 +15,13 @@
     <AssemblyFileVersion Condition="'$(AssemblyFileVersion)' == ''">0.0.0.1</AssemblyFileVersion>
     <Company>TFS Aggregator Team</Company>
     <Product>TFS Aggregator</Product>
-    <Copyright>Copyright (c) TFS Aggregator Team 2015-18</Copyright>
+    <Copyright>Copyright (c) TFS Aggregator Team 2015-2020</Copyright>
     <!-- use custom configuration attribute -->
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <NuGetLockFilePath>packages.$(TfsVersion).lock.json</NuGetLockFilePath>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <ItemGroup>
     <KnownTfsVersion Include="2013"   />
@@ -20,6 +31,9 @@
     <KnownTfsVersion Include="2017"   />
     <KnownTfsVersion Include="2017.2" />
     <KnownTfsVersion Include="2018"   />
+    <KnownTfsVersion Include="2019"   />
+    <KnownTfsVersion Include="2019.1" />
+    <KnownTfsVersion Include="2020"   />
 
     <AssemblyAttribute Include="System.Reflection.AssemblyConfigurationAttribute">
       <_Parameter1>$(Configuration) [TFS $(TfsVersion)]</_Parameter1>
@@ -33,6 +47,9 @@
     <!-- ensure that restore output and intermediate compilation output don't cause conflicts or incremental build issues -->
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <OutputPath>bin\$(Configuration)\</OutputPath>
+    <RestoreOutputPath>$(IntermediateOutputPath)</RestoreOutputPath>
+    <MSBuildProjectExtensionsPath>$(RestoreOutputPath)</MSBuildProjectExtensionsPath>
+    <ProjectAssetsFile>$(RestoreOutputPath)\project.assets.json</ProjectAssetsFile>
 
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <!-- default items shall also exlude folder above base (int.) output paths -->
